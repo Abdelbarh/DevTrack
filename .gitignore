@@ -1,0 +1,28 @@
+# ── .NET ──────────────────────────────────────────────
+bin/
+obj/
+*.user
+*.suo
+.vs/
+*.swp
+*.DS_Store
+
+# Secrets / environment
+.env
+.env.*
+!.env.example
+appsettings.*.json
+!appsettings.json
+!appsettings.Development.json
+
+# Aspire / certificates
+.aspire/
+
+# ── Node / Frontend ───────────────────────────────────
+node_modules/
+dist/
+.cache/
+.vite/
+
+# ── Misc ──────────────────────────────────────────────
+*.log
