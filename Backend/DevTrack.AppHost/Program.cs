@@ -1,6 +1,11 @@
 var builder = DistributedApplication.CreateBuilder(args);
 
-builder.AddProject<Projects.DevTrack_Api>("api");
+var postgres = builder.AddPostgres("postgres")
+    .AddDatabase("devtrack");
+
+builder.AddProject<Projects.DevTrack_Api>("api")
+    .WithReference(postgres)
+    .WaitFor(postgres);
 
 builder.AddNpmApp("web", "../../Frontend", scriptName: "dev")
     .WithHttpEndpoint(env: "PORT")
