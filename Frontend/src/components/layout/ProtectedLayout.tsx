@@ -1,9 +1,11 @@
 import { useAuth } from '@clerk/clerk-react'
 import { Navigate, Outlet } from 'react-router'
 import { Sidebar } from './Sidebar'
+import { useUserSync } from '@/hooks/useUserSync'
 
 export function ProtectedLayout() {
   const { isSignedIn, isLoaded } = useAuth()
+  useUserSync()
 
   if (!isLoaded) {
     return (
