@@ -9,6 +9,7 @@ import { ProfilePage } from '@/pages/ProfilePage'
 import { SettingsPage } from '@/pages/SettingsPage'
 import { SignInPage } from '@/pages/SignInPage'
 import { SignUpPage } from '@/pages/SignUpPage'
+import { SsoCallbackPage } from '@/pages/SsoCallbackPage'
 
 export default function App() {
   return (
@@ -17,6 +18,7 @@ export default function App() {
         <Routes>
           <Route path="/sign-in/*" element={<SignInPage />} />
           <Route path="/sign-up/*" element={<SignUpPage />} />
+          <Route path="/sso-callback" element={<SsoCallbackPage />} />
           <Route element={<ProtectedLayout />}>
             <Route index element={<DashboardPage />} />
             <Route path="applications" element={<ApplicationsPage />} />

@@ -6,6 +6,8 @@ import { Link, useNavigate } from 'react-router'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
+import { Separator } from '@/components/ui/separator'
+import { SocialButtons } from '@/components/auth/SocialButtons'
 
 const schema = z.object({
   email: z.email(),
@@ -51,6 +53,14 @@ export function SignInPage() {
         </div>
 
         <div className="bg-card border rounded-xl p-6 shadow-sm space-y-4">
+          <SocialButtons mode="signIn" />
+
+          <div className="flex items-center gap-3">
+            <Separator className="flex-1" />
+            <span className="text-xs text-muted-foreground">or</span>
+            <Separator className="flex-1" />
+          </div>
+
           <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
             <div className="space-y-1">
               <Label htmlFor="email">Email</Label>
