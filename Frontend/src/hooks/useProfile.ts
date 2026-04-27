@@ -1,4 +1,5 @@
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query'
+import { toast } from 'sonner'
 import { useApi } from '@/lib/api'
 
 export interface Profile {
@@ -27,6 +28,9 @@ export function useUpdateProfile() {
         method: 'PUT',
         body: JSON.stringify(data),
       }),
-    onSuccess: () => queryClient.invalidateQueries({ queryKey: ['profile'] }),
+    onSuccess: () => {
+      toast.success('Profile saved')
+      queryClient.invalidateQueries({ queryKey: ['profile'] })
+    },
   })
 }

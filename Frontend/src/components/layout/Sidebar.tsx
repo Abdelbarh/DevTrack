@@ -1,6 +1,7 @@
+import { useState } from 'react'
 import { NavLink } from 'react-router'
-import { LayoutDashboard, Briefcase, User, Settings, LogOut } from 'lucide-react'
-import { useUser, useClerk } from '@clerk/clerk-react'
+import { LayoutDashboard, Briefcase, User, Settings, LogOut, Copy, Check } from 'lucide-react'
+import { useUser, useClerk, useAuth } from '@clerk/clerk-react'
 import { useNavigate } from 'react-router'
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar'
 import { Separator } from '@/components/ui/separator'
@@ -16,7 +17,17 @@ const links = [
 export function Sidebar() {
   const { user } = useUser()
   const { signOut } = useClerk()
+  const { getToken } = useAuth()
   const navigate = useNavigate()
+  const [copied, setCopied] = useState(false)
+
+  async function copyToken() {
+    const token = await getToken()
+    if (!token) return
+    await navigator.clipboard.writeText(token)
+    setCopied(true)
+    setTimeout(() => setCopied(false), 2000)
+  }
 
   const initials = [user?.firstName, user?.lastName]
     .filter(Boolean)
@@ -50,6 +61,19 @@ export function Sidebar() {
           </NavLink>
         ))}
       </nav>
+
+      {import.meta.env.DEV && (
+        <div className="px-3 pb-2">
+          <button
+            onClick={copyToken}
+            className="w-full flex items-center gap-2 px-3 py-1.5 rounded-md text-xs text-muted-foreground hover:bg-secondary hover:text-foreground transition-colors"
+            title="Copy Clerk JWT for Scalar"
+          >
+            {copied ? <Check size={13} className="text-green-500" /> : <Copy size={13} />}
+            {copied ? 'Token copied!' : 'Copy API token'}
+          </button>
+        </div>
+      )}
 
       <div className="p-3">
         <Separator className="mb-3" />

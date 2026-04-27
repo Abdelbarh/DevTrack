@@ -1,4 +1,5 @@
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query'
+import { toast } from 'sonner'
 import { useApi } from '@/lib/api'
 import type { Application, CreateApplicationRequest } from '@/types/application'
 
@@ -19,7 +20,10 @@ export function useCreateApplication() {
         method: 'POST',
         body: JSON.stringify(data),
       }),
-    onSuccess: () => queryClient.invalidateQueries({ queryKey: ['applications'] }),
+    onSuccess: () => {
+      toast.success('Application added')
+      queryClient.invalidateQueries({ queryKey: ['applications'] })
+    },
   })
 }
 

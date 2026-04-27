@@ -1,6 +1,7 @@
 var builder = DistributedApplication.CreateBuilder(args);
 
 var postgres = builder.AddPostgres("postgres")
+    .WithDataVolume("devtrack-postgres-data")
     .AddDatabase("devtrack");
 
 builder.AddProject<Projects.DevTrack_Api>("api")

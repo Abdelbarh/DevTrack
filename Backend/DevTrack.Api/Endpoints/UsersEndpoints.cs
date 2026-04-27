@@ -1,7 +1,9 @@
 using DevTrack.Api.Auth;
 using DevTrack.Api.Data;
+using DevTrack.Api.DTOs;
 using DevTrack.Api.Entities;
 using Microsoft.EntityFrameworkCore;
+using Npgsql;
 using System.Security.Claims;
 
 namespace DevTrack.Api.Endpoints;
@@ -45,10 +47,17 @@ public static class UsersEndpoints
             };
             db.Users.Add(user);
             db.UserProfiles.Add(profile);
-            await db.SaveChangesAsync();
+            try
+            {
+                await db.SaveChangesAsync();
+            }
+            catch (DbUpdateException ex) when (ex.InnerException is PostgresException { SqlState: "23505" })
+            {
+                // Race condition: concurrent request already created this user (e.g. React Strict Mode double-mount)
+            }
         }
 
-        return Results.Ok();
+        return Results.NoContent();
     }
 
     static async Task<IResult> GetProfile(HttpContext ctx, AppDbContext db)
@@ -86,9 +95,6 @@ public static class UsersEndpoints
         profile.UpdatedAt = DateTime.UtcNow;
 
         await db.SaveChangesAsync();
-        return Results.Ok();
+        return Results.NoContent();
     }
 }
-
-record ProfileDto(List<string> Stack, int YearsOfExperience, string? GitHubUrl, string? ResumeText);
-record UpdateProfileRequest(List<string> Stack, int YearsOfExperience, string? GitHubUrl, string? ResumeText);
