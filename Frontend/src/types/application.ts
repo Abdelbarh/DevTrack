@@ -7,15 +7,19 @@ export type ApplicationStatus =
   | 'Rejected'
   | 'Withdrawn'
 
-export interface Application {
-  id: string
-  companyName: string | null
-  jobTitle: string | null
-  parsedStack: string[]
+export interface ParsedApplicationData {
+  stack: string[] | null
   seniorityLevel: string | null
   isRemote: boolean | null
   salaryMin: number | null
   salaryMax: number | null
+}
+
+export interface Application {
+  id: string
+  companyName: string | null
+  jobTitle: string | null
+  parsedData: ParsedApplicationData | null
   matchScore: number | null
   status: ApplicationStatus
   appliedAt: string | null

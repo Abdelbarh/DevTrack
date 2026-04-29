@@ -1,14 +1,12 @@
+using DevTrack.Api.Entities;
+
 namespace DevTrack.Api.DTOs;
 
 record ApplicationDto(
     Guid Id,
     string? CompanyName,
     string? JobTitle,
-    List<string> ParsedStack,
-    string? SeniorityLevel,
-    bool? IsRemote,
-    decimal? SalaryMin,
-    decimal? SalaryMax,
+    ParsedApplicationData? ParsedData,
     int? MatchScore,
     string Status,
     DateTime? AppliedAt,

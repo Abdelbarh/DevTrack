@@ -84,9 +84,9 @@ export function ApplicationsPage() {
                   <p className="text-sm text-muted-foreground truncate">
                     {app.jobTitle ?? 'Unknown position'}
                   </p>
-                  {app.parsedStack.length > 0 && (
+                  {(app.parsedData?.stack?.length ?? 0) > 0 && (
                     <div className="flex gap-1 flex-wrap mt-2">
-                      {app.parsedStack.slice(0, 5).map((tech) => (
+                      {app.parsedData!.stack!.slice(0, 5).map((tech) => (
                         <span
                           key={tech}
                           className="text-xs px-2 py-0.5 bg-secondary rounded-md text-secondary-foreground"
@@ -94,9 +94,9 @@ export function ApplicationsPage() {
                           {tech}
                         </span>
                       ))}
-                      {app.parsedStack.length > 5 && (
+                      {app.parsedData!.stack!.length > 5 && (
                         <span className="text-xs text-muted-foreground">
-                          +{app.parsedStack.length - 5} more
+                          +{app.parsedData!.stack!.length - 5} more
                         </span>
                       )}
                     </div>
@@ -117,20 +117,20 @@ export function ApplicationsPage() {
                 </div>
               </div>
 
-              {(app.seniorityLevel || app.isRemote !== null) && (
+              {(app.parsedData?.seniorityLevel || app.parsedData?.isRemote != null) && (
                 <div className="flex gap-2 mt-3">
-                  {app.seniorityLevel && (
-                    <Badge variant="outline" className="text-xs">{app.seniorityLevel}</Badge>
+                  {app.parsedData?.seniorityLevel && (
+                    <Badge variant="outline" className="text-xs">{app.parsedData.seniorityLevel}</Badge>
                   )}
-                  {app.isRemote === true && (
+                  {app.parsedData?.isRemote === true && (
                     <Badge variant="outline" className="text-xs">Remote</Badge>
                   )}
-                  {app.isRemote === false && (
+                  {app.parsedData?.isRemote === false && (
                     <Badge variant="outline" className="text-xs">On-site</Badge>
                   )}
-                  {app.salaryMin && app.salaryMax && (
+                  {app.parsedData?.salaryMin && app.parsedData?.salaryMax && (
                     <Badge variant="outline" className="text-xs">
-                      €{app.salaryMin.toLocaleString()}–€{app.salaryMax.toLocaleString()}
+                      €{app.parsedData.salaryMin.toLocaleString()}–€{app.parsedData.salaryMax.toLocaleString()}
                     </Badge>
                   )}
                 </div>

@@ -10,6 +10,8 @@ public class UserProfile
     public int YearsOfExperience { get; set; }
     public string? GitHubUrl { get; set; }
     public string? ResumeText { get; set; }
+    public string? CvFileUrl { get; set; }
+    public DateTime? CvUploadedAt { get; set; }
 
     public DateTime CreatedAt { get; set; }
     public DateTime UpdatedAt { get; set; }

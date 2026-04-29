@@ -26,8 +26,7 @@ public static class ApplicationsEndpoints
             .Where(a => a.User.ClerkId == clerkId)
             .OrderByDescending(a => a.CreatedAt)
             .Select(a => new ApplicationDto(
-                a.Id, a.CompanyName, a.JobTitle, a.ParsedStack,
-                a.SeniorityLevel, a.IsRemote, a.SalaryMin, a.SalaryMax,
+                a.Id, a.CompanyName, a.JobTitle, a.ParsedData,
                 a.MatchScore, a.Status.ToString(), a.AppliedAt, a.CreatedAt, a.JobDescriptionRaw
             ))
             .ToListAsync();
@@ -54,8 +53,7 @@ public static class ApplicationsEndpoints
         await db.SaveChangesAsync();
 
         return Results.Created($"/applications/{application.Id}", new ApplicationDto(
-            application.Id, application.CompanyName, application.JobTitle, application.ParsedStack,
-            application.SeniorityLevel, application.IsRemote, application.SalaryMin, application.SalaryMax,
+            application.Id, application.CompanyName, application.JobTitle, application.ParsedData,
             application.MatchScore, application.Status.ToString(), application.AppliedAt,
             application.CreatedAt, application.JobDescriptionRaw
         ));
