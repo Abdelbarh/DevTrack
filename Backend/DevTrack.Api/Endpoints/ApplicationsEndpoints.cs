@@ -14,6 +14,7 @@ public static class ApplicationsEndpoints
 
         group.MapGet("/", GetApplications);
         group.MapPost("/", CreateApplication);
+        group.MapPatch("/{id:guid}/status", UpdateStatus);
 
         return app;
     }
@@ -57,5 +58,23 @@ public static class ApplicationsEndpoints
             application.MatchScore, application.Status.ToString(), application.AppliedAt,
             application.CreatedAt, application.JobDescriptionRaw
         ));
+    }
+
+    static async Task<IResult> UpdateStatus(Guid id, HttpContext ctx, AppDbContext db, UpdateApplicationStatusRequest req)
+    {
+        if (!Enum.TryParse<ApplicationStatus>(req.Status, ignoreCase: true, out var status))
+            return Results.BadRequest("Invalid status value.");
+
+        var clerkId = ctx.GetClerkId();
+        var application = await db.Applications
+            .FirstOrDefaultAsync(a => a.Id == id && a.User.ClerkId == clerkId);
+
+        if (application == null) return Results.NotFound();
+
+        application.Status = status;
+        application.UpdatedAt = DateTime.UtcNow;
+        await db.SaveChangesAsync();
+
+        return Results.NoContent();
     }
 }

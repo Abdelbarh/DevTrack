@@ -15,3 +15,5 @@ record ApplicationDto(
 );
 
 record CreateApplicationRequest(string JobDescriptionRaw);
+
+record UpdateApplicationStatusRequest(string Status);
