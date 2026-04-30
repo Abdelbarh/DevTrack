@@ -186,25 +186,31 @@ DevTrack/
 │   └── src/
 │       ├── components/
 │       │   ├── applications/        # StatusBadge, AddApplicationDialog
+│       │   ├── auth/                # SocialButtons (Clerk OAuth)
 │       │   ├── layout/              # AppLayout, Sidebar, ProtectedLayout
-│       │   └── ui/                  # Icon, Input, Label, TagsInput, ...
+│       │   └── ui/                  # Icon, Button, Input, Label, TagsInput, ...
 │       ├── hooks/                   # useApplications, useProfile, useUserSync
-│       ├── lib/                     # api.ts, theme.ts, query-client.ts
+│       ├── lib/                     # api.ts, theme.ts, query-client.ts, utils.ts
 │       ├── pages/                   # DashboardPage, ApplicationsPage, ApplicationDetailPage,
-│       │                            # NewApplicationPage, ProfilePage, SettingsPage
+│       │                            # NewApplicationPage, ProfilePage, SettingsPage,
+│       │                            # SignInPage, SignUpPage, SsoCallbackPage
 │       └── types/                   # application.ts (TypeScript interfaces)
 │
 ├── Backend/
 │   ├── DevTrack.AppHost/            # .NET Aspire orchestrator
 │   ├── DevTrack.ServiceDefaults/    # Shared Aspire config (health, telemetry)
 │   └── DevTrack.Api/                # ASP.NET Core Minimal API
+│       ├── Auth/
+│       │   └── ClerkUserExtensions.cs  # HttpContext.GetClerkId() helper
 │       ├── Data/
 │       │   ├── AppDbContext.cs      # EF Core context + JSONB converter
 │       │   ├── AppDbContextFactory.cs # Design-time factory for dotnet ef
 │       │   └── DbSeeder.cs          # Dev seed data (6 applications)
 │       ├── DTOs/                    # Request/response shapes
 │       ├── Endpoints/               # UsersEndpoints, ApplicationsEndpoints
-│       ├── Entities/                # User, UserProfile, Application, ...
+│       ├── Entities/                # User, UserProfile, Application,
+│       │                            # ParsedApplicationData, ApplicationDocument,
+│       │                            # ApplicationStatusHistory, Reminder, Subscription
 │       ├── Migrations/              # EF Core migrations
 │       └── Program.cs               # Startup, middleware, route registration
 │
