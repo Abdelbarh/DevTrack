@@ -6,8 +6,8 @@ public class ApplicationStatusHistory
     public Guid ApplicationId { get; set; }
     public Application Application { get; set; } = null!;
 
-    public ApplicationStatus? FromStatus { get; set; }
-    public ApplicationStatus ToStatus { get; set; }
+    public string? FromStatus { get; set; }
+    public string ToStatus { get; set; } = string.Empty;
     public DateTime ChangedAt { get; set; }
     public string? Note { get; set; }
 }

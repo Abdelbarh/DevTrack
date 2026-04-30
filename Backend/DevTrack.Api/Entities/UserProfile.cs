@@ -6,8 +6,8 @@ public class UserProfile
     public Guid UserId { get; set; }
     public User User { get; set; } = null!;
 
-    public List<string> Stack { get; set; } = [];
-    public int YearsOfExperience { get; set; }
+    public List<string>? Stack { get; set; }
+    public int? YearsOfExperience { get; set; }
     public string? GitHubUrl { get; set; }
     public string? ResumeText { get; set; }
     public string? CvFileUrl { get; set; }

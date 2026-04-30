@@ -8,7 +8,7 @@ builder.AddProject<Projects.DevTrack_Api>("api")
     .WithReference(postgres)
     .WaitFor(postgres);
 
-builder.AddNpmApp("web", "../../Frontend", scriptName: "dev")
+builder.AddNpmApp("web", "../../Frontend2", scriptName: "dev")
     .WithHttpEndpoint(env: "PORT")
     .WithExternalHttpEndpoints();
 

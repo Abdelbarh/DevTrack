@@ -82,11 +82,13 @@ if (app.Environment.IsDevelopment())
 
     using var scope = app.Services.CreateScope();
     var db = scope.ServiceProvider.GetRequiredService<AppDbContext>();
+    var config = scope.ServiceProvider.GetRequiredService<IConfiguration>();
     for (var attempt = 1; attempt <= 5; attempt++)
     {
         try { db.Database.Migrate(); break; }
         catch when (attempt < 5) { Thread.Sleep(2000); }
     }
+    await DbSeeder.SeedAsync(db, config);
 }
 
 app.UseHttpsRedirection();

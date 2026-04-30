@@ -168,7 +168,7 @@ namespace DevTrack.Api.Migrations
                         .IsRequired()
                         .ValueGeneratedOnAdd()
                         .HasColumnType("text")
-                        .HasDefaultValue("Pending");
+                        .HasDefaultValue("pending");
 
                     b.Property<string>("Type")
                         .IsRequired()
@@ -285,7 +285,6 @@ namespace DevTrack.Api.Migrations
                         .HasColumnType("text");
 
                     b.PrimitiveCollection<List<string>>("Stack")
-                        .IsRequired()
                         .HasColumnType("text[]");
 
                     b.Property<DateTime>("UpdatedAt")
@@ -296,7 +295,7 @@ namespace DevTrack.Api.Migrations
                     b.Property<Guid>("UserId")
                         .HasColumnType("uuid");
 
-                    b.Property<int>("YearsOfExperience")
+                    b.Property<int?>("YearsOfExperience")
                         .HasColumnType("integer");
 
                     b.HasKey("Id");

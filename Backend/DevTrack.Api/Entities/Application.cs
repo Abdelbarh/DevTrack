@@ -1,14 +1,19 @@
 namespace DevTrack.Api.Entities;
 
-public enum ApplicationStatus
+public static class ApplicationStatuses
 {
-    Saved,
-    Applied,
-    Screening,
-    Interview,
-    Offer,
-    Rejected,
-    Withdrawn
+    public const string Saved     = "Saved";
+    public const string Applied   = "Applied";
+    public const string Screening = "Screening";
+    public const string Interview = "Interview";
+    public const string Offer     = "Offer";
+    public const string Rejected  = "Rejected";
+    public const string Withdrawn = "Withdrawn";
+
+    public static readonly IReadOnlySet<string> All = new HashSet<string>
+    {
+        Saved, Applied, Screening, Interview, Offer, Rejected, Withdrawn
+    };
 }
 
 public class Application
@@ -26,7 +31,7 @@ public class Application
     public int? MatchScore { get; set; }
     public string? MatchExplanation { get; set; }
 
-    public ApplicationStatus Status { get; set; } = ApplicationStatus.Saved;
+    public string Status { get; set; } = ApplicationStatuses.Saved;
     public DateTime? AppliedAt { get; set; }
 
     public DateTime CreatedAt { get; set; }

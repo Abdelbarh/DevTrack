@@ -9,9 +9,15 @@ export interface Profile {
   resumeText: string | null
 }
 
+export interface ParseCvResult {
+  stack: string[] | null
+  yearsOfExperience: number | null
+  gitHubUrl: string | null
+  resumeText: string | null
+}
+
 export function useProfile() {
   const { request } = useApi()
-
   return useQuery<Profile>({
     queryKey: ['profile'],
     queryFn: () => request<Profile>('/users/me/profile'),
@@ -21,7 +27,6 @@ export function useProfile() {
 export function useUpdateProfile() {
   const { request } = useApi()
   const queryClient = useQueryClient()
-
   return useMutation({
     mutationFn: (data: Profile) =>
       request<void>('/users/me/profile', {
@@ -32,5 +37,12 @@ export function useUpdateProfile() {
       toast.success('Profile saved')
       queryClient.invalidateQueries({ queryKey: ['profile'] })
     },
+  })
+}
+
+export function useParseCv() {
+  const { request } = useApi()
+  return useMutation({
+    mutationFn: () => request<ParseCvResult>('/users/me/profile/parse-cv', { method: 'POST' }),
   })
 }

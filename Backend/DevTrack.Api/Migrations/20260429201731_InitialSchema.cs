@@ -86,8 +86,8 @@ namespace DevTrack.Api.Migrations
                 {
                     Id = table.Column<Guid>(type: "uuid", nullable: false),
                     UserId = table.Column<Guid>(type: "uuid", nullable: false),
-                    Stack = table.Column<List<string>>(type: "text[]", nullable: false),
-                    YearsOfExperience = table.Column<int>(type: "integer", nullable: false),
+                    Stack = table.Column<List<string>>(type: "text[]", nullable: true),
+                    YearsOfExperience = table.Column<int>(type: "integer", nullable: true),
                     GitHubUrl = table.Column<string>(type: "text", nullable: true),
                     ResumeText = table.Column<string>(type: "text", nullable: true),
                     CvFileUrl = table.Column<string>(type: "text", nullable: true),
@@ -159,7 +159,7 @@ namespace DevTrack.Api.Migrations
                     Type = table.Column<string>(type: "text", nullable: false),
                     ScheduledFor = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
                     SentAt = table.Column<DateTime>(type: "timestamp with time zone", nullable: true),
-                    Status = table.Column<string>(type: "text", nullable: false, defaultValue: "Pending"),
+                    Status = table.Column<string>(type: "text", nullable: false, defaultValue: "pending"),
                     CreatedAt = table.Column<DateTime>(type: "timestamp with time zone", nullable: false, defaultValueSql: "now()")
                 },
                 constraints: table =>

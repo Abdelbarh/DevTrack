@@ -14,7 +14,7 @@ public class AppDbContext(DbContextOptions<AppDbContext> options) : DbContext(op
     public DbSet<Reminder> Reminders => Set<Reminder>();
     public DbSet<Subscription> Subscriptions => Set<Subscription>();
 
-    private static readonly JsonSerializerOptions _jsonOptions = new(JsonSerializerDefaults.Web);
+    private static readonly JsonSerializerOptions _json = new(JsonSerializerDefaults.Web);
 
     protected override void OnModelCreating(ModelBuilder model)
     {
@@ -32,6 +32,7 @@ public class AppDbContext(DbContextOptions<AppDbContext> options) : DbContext(op
             e.HasOne(p => p.User).WithOne(u => u.Profile)
                 .HasForeignKey<UserProfile>(p => p.UserId)
                 .OnDelete(DeleteBehavior.Cascade);
+            e.HasIndex(p => p.UserId).IsUnique();
             e.Property(p => p.Stack).HasColumnType("text[]");
             e.Property(p => p.CreatedAt).HasDefaultValueSql("now()");
             e.Property(p => p.UpdatedAt).HasDefaultValueSql("now()");
@@ -43,12 +44,12 @@ public class AppDbContext(DbContextOptions<AppDbContext> options) : DbContext(op
             e.HasOne(a => a.User).WithMany(u => u.Applications)
                 .HasForeignKey(a => a.UserId)
                 .OnDelete(DeleteBehavior.Cascade);
-            e.Property(a => a.Status).HasConversion<string>().HasDefaultValue(ApplicationStatus.Saved);
+            e.Property(a => a.Status).HasDefaultValue(ApplicationStatuses.Saved);
             e.Property(a => a.ParsedData)
                 .HasColumnType("jsonb")
                 .HasConversion(
-                    v => v == null ? null! : JsonSerializer.Serialize(v, _jsonOptions),
-                    v => v == null ? null : JsonSerializer.Deserialize<ParsedApplicationData>(v, _jsonOptions)
+                    v => v == null ? null! : JsonSerializer.Serialize(v, _json),
+                    v => v == null ? null  : JsonSerializer.Deserialize<ParsedApplicationData>(v, _json)
                 );
             e.Property(a => a.CreatedAt).HasDefaultValueSql("now()");
             e.Property(a => a.UpdatedAt).HasDefaultValueSql("now()");
@@ -73,8 +74,6 @@ public class AppDbContext(DbContextOptions<AppDbContext> options) : DbContext(op
             e.HasOne(h => h.Application).WithMany(a => a.StatusHistory)
                 .HasForeignKey(h => h.ApplicationId)
                 .OnDelete(DeleteBehavior.Cascade);
-            e.Property(h => h.FromStatus).HasConversion<string>();
-            e.Property(h => h.ToStatus).HasConversion<string>();
             e.Property(h => h.ChangedAt).HasDefaultValueSql("now()");
         });
 
@@ -84,7 +83,7 @@ public class AppDbContext(DbContextOptions<AppDbContext> options) : DbContext(op
             e.HasOne(r => r.Application).WithMany(a => a.Reminders)
                 .HasForeignKey(r => r.ApplicationId)
                 .OnDelete(DeleteBehavior.Cascade);
-            e.Property(r => r.Status).HasConversion<string>().HasDefaultValue(ReminderStatus.Pending);
+            e.Property(r => r.Status).HasDefaultValue(ReminderStatuses.Pending);
             e.Property(r => r.CreatedAt).HasDefaultValueSql("now()");
             e.HasIndex(r => new { r.Status, r.ScheduledFor });
         });

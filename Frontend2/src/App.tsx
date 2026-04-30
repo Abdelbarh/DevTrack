@@ -6,6 +6,8 @@ import { queryClient } from '@/lib/query-client'
 import { ProtectedLayout } from '@/components/layout/ProtectedLayout'
 import { DashboardPage } from '@/pages/DashboardPage'
 import { ApplicationsPage } from '@/pages/ApplicationsPage'
+import { NewApplicationPage } from '@/pages/NewApplicationPage'
+import { ApplicationDetailPage } from '@/pages/ApplicationDetailPage'
 import { ProfilePage } from '@/pages/ProfilePage'
 import { SettingsPage } from '@/pages/SettingsPage'
 import { SignInPage } from '@/pages/SignInPage'
@@ -23,6 +25,8 @@ export default function App() {
           <Route element={<ProtectedLayout />}>
             <Route index element={<DashboardPage />} />
             <Route path="applications" element={<ApplicationsPage />} />
+            <Route path="applications/new" element={<NewApplicationPage />} />
+            <Route path="applications/:id" element={<ApplicationDetailPage />} />
             <Route path="profile" element={<ProfilePage />} />
             <Route path="settings" element={<SettingsPage />} />
           </Route>
