@@ -178,4 +178,70 @@ v1 is considered complete when:
 
 ---
 
-## 📦 Repository Structure *(planned)*
+## 📦 Repository Structure
+
+```
+DevTrack/
+├── Frontend/                        # React 19 + Vite + TypeScript
+│   └── src/
+│       ├── components/
+│       │   ├── applications/        # StatusBadge, AddApplicationDialog
+│       │   ├── layout/              # AppLayout, Sidebar, ProtectedLayout
+│       │   └── ui/                  # Icon, Input, Label, TagsInput, ...
+│       ├── hooks/                   # useApplications, useProfile, useUserSync
+│       ├── lib/                     # api.ts, theme.ts, query-client.ts
+│       ├── pages/                   # DashboardPage, ApplicationsPage, ApplicationDetailPage,
+│       │                            # NewApplicationPage, ProfilePage, SettingsPage
+│       └── types/                   # application.ts (TypeScript interfaces)
+│
+├── Backend/
+│   ├── DevTrack.AppHost/            # .NET Aspire orchestrator
+│   ├── DevTrack.ServiceDefaults/    # Shared Aspire config (health, telemetry)
+│   └── DevTrack.Api/                # ASP.NET Core Minimal API
+│       ├── Data/
+│       │   ├── AppDbContext.cs      # EF Core context + JSONB converter
+│       │   ├── AppDbContextFactory.cs # Design-time factory for dotnet ef
+│       │   └── DbSeeder.cs          # Dev seed data (6 applications)
+│       ├── DTOs/                    # Request/response shapes
+│       ├── Endpoints/               # UsersEndpoints, ApplicationsEndpoints
+│       ├── Entities/                # User, UserProfile, Application, ...
+│       ├── Migrations/              # EF Core migrations
+│       └── Program.cs               # Startup, middleware, route registration
+│
+├── ARCHITECTURE.md                  # ERD, sequence diagrams, API map
+└── README.md
+```
+
+---
+
+## 🏃 Running Locally
+
+**Prerequisites:** .NET 9 SDK, Node.js, pnpm, Docker Desktop
+
+```bash
+# Start everything (Postgres, API, Frontend)
+cd Backend/DevTrack.AppHost
+dotnet run
+```
+
+Aspire dashboard opens at `https://localhost:17265` — shows all services and logs.
+
+**Seed data:** Set your Clerk user ID in `Backend/DevTrack.Api/appsettings.Development.json`:
+```json
+"DevTrack": {
+  "TestClerkUserId": "user_xxxxxxxxxxxx"
+}
+```
+The seeder runs automatically on startup and inserts 6 sample applications.
+
+---
+
+## 🗺 Architecture
+
+See [ARCHITECTURE.md](ARCHITECTURE.md) for:
+- Entity-Relationship Diagram
+- System architecture (Frontend ↔ API ↔ Postgres ↔ Clerk)
+- Authenticated request flow (sequence diagram)
+- Application status state machine
+- Full API endpoint map
+- AI stub locations

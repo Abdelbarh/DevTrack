@@ -12,7 +12,7 @@ import {
 } from '@/hooks/useApplications'
 import { StatusBadge } from '@/components/applications/StatusBadge'
 import { Icon } from '@/components/ui/Icon'
-import type { ApplicationStatus, DocumentDto } from '@/types/application'
+import type { ApplicationStatus } from '@/types/application'
 
 const PIPELINE: ApplicationStatus[] = ['Saved', 'Applied', 'Screening', 'Interview', 'Offer']
 const TERMINAL: ApplicationStatus[] = ['Rejected', 'Withdrawn']
