@@ -56,12 +56,12 @@ export function DashboardPage() {
         </div>
       </div>
 
-      <div style={{ padding: '40px 32px 64px', maxWidth: 940, width: '100%', margin: '0 auto' }}>
-        <header style={{ marginBottom: 32 }}>
-          <h1 style={{ margin: 0, fontSize: 26, fontWeight: 600, letterSpacing: '-0.02em' }}>
+      <div style={{ padding: '48px 36px 72px', maxWidth: 960, width: '100%', margin: '0 auto' }}>
+        <header style={{ marginBottom: 36 }}>
+          <h1 style={{ margin: 0, fontSize: 28, fontWeight: 600, letterSpacing: '-0.025em' }}>
             Welcome back{user?.firstName ? `, ${user.firstName}` : ''}
           </h1>
-          <p style={{ color: 'var(--fg-2)', margin: '6px 0 0', fontSize: 14 }}>
+          <p style={{ color: 'var(--fg-2)', margin: '8px 0 0', fontSize: 15 }}>
             {applications.length === 0
               ? "Let's get your first application in."
               : "Here's where things stand."}
@@ -75,42 +75,42 @@ export function DashboardPage() {
         ) : (
           <div style={{ display: 'flex', flexDirection: 'column', gap: 24 }}>
             {/* Pipeline counts */}
-            <div className="card" style={{ padding: '18px 20px' }}>
-              <div style={{ display: 'flex', alignItems: 'baseline', gap: 12, marginBottom: 14 }}>
-                <h3 style={{ margin: 0, fontSize: 14, fontWeight: 600 }}>Pipeline</h3>
-                <span style={{ fontFamily: 'var(--mono)', fontSize: 11, color: 'var(--fg-3)' }}>
+            <div className="card" style={{ padding: '20px 22px' }}>
+              <div style={{ display: 'flex', alignItems: 'baseline', gap: 12, marginBottom: 16 }}>
+                <h3 style={{ margin: 0, fontSize: 15, fontWeight: 600 }}>Pipeline</h3>
+                <span style={{ fontFamily: 'var(--mono)', fontSize: 11.5, color: 'var(--fg-3)' }}>
                   {applications.length} total
                 </span>
               </div>
-              <div style={{ display: 'grid', gridTemplateColumns: 'repeat(6, 1fr)', gap: 8 }}>
+              <div style={{ display: 'grid', gridTemplateColumns: 'repeat(6, 1fr)', gap: 10 }}>
                 {counts.map((p) => (
                   <div
                     key={p.id}
                     style={{
-                      padding: '12px',
-                      borderRadius: 8,
+                      padding: '14px',
+                      borderRadius: 10,
                       background: 'var(--bg-2)',
                       border: '1px solid var(--line)',
                     }}
                   >
-                    <div style={{ display: 'flex', alignItems: 'center', gap: 6, marginBottom: 8 }}>
+                    <div style={{ display: 'flex', alignItems: 'center', gap: 6, marginBottom: 10 }}>
                       <span style={{
-                        width: 6, height: 6, borderRadius: '50%',
+                        width: 7, height: 7, borderRadius: '50%',
                         background: `var(--status-${p.id})`,
-                        boxShadow: `0 0 6px var(--status-${p.id})`,
+                        boxShadow: `0 0 7px var(--status-${p.id})`,
                         flexShrink: 0,
                       }} />
                       <span style={{
-                        fontFamily: 'var(--mono)', fontSize: 10,
-                        color: 'var(--fg-2)', textTransform: 'uppercase', letterSpacing: '0.08em',
+                        fontFamily: 'var(--mono)', fontSize: 10.5,
+                        color: 'var(--fg-2)', textTransform: 'uppercase', letterSpacing: '0.07em',
                       }}>
                         {p.label}
                       </span>
                     </div>
                     <div style={{
-                      fontSize: 22, fontWeight: 500,
+                      fontSize: 26, fontWeight: 500,
                       color: p.n === 0 ? 'var(--fg-3)' : 'var(--fg-0)',
-                      letterSpacing: '-0.02em',
+                      letterSpacing: '-0.03em', lineHeight: 1,
                     }}>
                       {p.n}
                     </div>
@@ -120,13 +120,13 @@ export function DashboardPage() {
             </div>
 
             {/* Recent applications */}
-            <div className="card" style={{ padding: '18px 20px' }}>
-              <div style={{ display: 'flex', alignItems: 'baseline', gap: 12, marginBottom: 6 }}>
-                <h3 style={{ margin: 0, fontSize: 14, fontWeight: 600 }}>Recent applications</h3>
+            <div className="card" style={{ padding: '20px 22px' }}>
+              <div style={{ display: 'flex', alignItems: 'center', gap: 12, marginBottom: 8 }}>
+                <h3 style={{ margin: 0, fontSize: 15, fontWeight: 600 }}>Recent applications</h3>
                 <button
                   onClick={() => navigate('/applications')}
                   className="btn btn-ghost btn-sm"
-                  style={{ marginLeft: 'auto', fontFamily: 'var(--mono)', fontSize: 11 }}
+                  style={{ marginLeft: 'auto', fontFamily: 'var(--mono)', fontSize: 11.5 }}
                 >
                   View all →
                 </button>
@@ -135,34 +135,39 @@ export function DashboardPage() {
               {recent.map((app, i) => (
                 <div
                   key={app.id}
+                  onClick={() => navigate(`/applications/${app.id}`)}
                   style={{
                     display: 'grid',
-                    gridTemplateColumns: '32px minmax(0, 1fr) 104px 72px',
-                    gap: 12,
-                    padding: '12px 4px',
+                    gridTemplateColumns: '36px minmax(0, 1fr) 112px 72px',
+                    gap: 14,
+                    padding: '13px 6px',
                     alignItems: 'center',
                     borderTop: i === 0 ? 'none' : '1px solid var(--line)',
                     cursor: 'pointer',
+                    borderRadius: 8,
+                    transition: 'background 0.1s',
                   }}
+                  onMouseEnter={(e) => (e.currentTarget.style.background = 'var(--bg-2)')}
+                  onMouseLeave={(e) => (e.currentTarget.style.background = 'transparent')}
                 >
                   <div style={{
-                    width: 28, height: 28, borderRadius: 6,
+                    width: 32, height: 32, borderRadius: 7,
                     background: 'var(--bg-2)', border: '1px solid var(--line)',
                     display: 'grid', placeItems: 'center',
-                    fontSize: 11, fontWeight: 600, color: 'var(--fg-1)',
+                    fontSize: 11.5, fontWeight: 600, color: 'var(--fg-1)',
                     fontFamily: 'var(--mono)',
                   }}>
                     {coInitials(app.companyName)}
                   </div>
                   <div style={{ minWidth: 0 }}>
                     <div style={{
-                      fontSize: 13, fontWeight: 500, color: 'var(--fg-0)',
+                      fontSize: 14, fontWeight: 500, color: 'var(--fg-0)',
                       whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis',
                     }}>
                       {app.jobTitle ?? 'Unknown position'}
                     </div>
                     <div style={{
-                      fontFamily: 'var(--mono)', fontSize: 11, color: 'var(--fg-2)',
+                      fontFamily: 'var(--mono)', fontSize: 11.5, color: 'var(--fg-2)',
                       whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis',
                     }}>
                       {app.companyName ?? 'Unknown company'}
@@ -170,7 +175,7 @@ export function DashboardPage() {
                   </div>
                   <StatusBadge status={app.status} />
                   <span style={{
-                    fontFamily: 'var(--mono)', fontSize: 11,
+                    fontFamily: 'var(--mono)', fontSize: 11.5,
                     color: 'var(--fg-3)', textAlign: 'right',
                   }}>
                     {timeAgo(app.createdAt)}

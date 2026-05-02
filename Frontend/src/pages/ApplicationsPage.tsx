@@ -72,9 +72,9 @@ export function ApplicationsPage() {
         </div>
       </div>
 
-      <div style={{ display: 'grid', gridTemplateColumns: '180px 1fr', flex: 1, minHeight: 0, overflow: 'hidden' }}>
+      <div style={{ display: 'grid', gridTemplateColumns: '192px 1fr', flex: 1, minHeight: 0, overflow: 'hidden' }}>
         {/* Status filter sidebar */}
-        <aside style={{ borderRight: '1px solid var(--line)', padding: '20px 14px', overflowY: 'auto' }}>
+        <aside style={{ borderRight: '1px solid var(--line)', padding: '22px 16px', overflowY: 'auto' }}>
           <div className="eyebrow" style={{ padding: '0 8px 8px' }}>Status</div>
           <div style={{ display: 'flex', flexDirection: 'column', gap: 1 }}>
             {filtersWithCounts.map((f) => (
@@ -101,14 +101,14 @@ export function ApplicationsPage() {
             position: 'sticky', top: 0, zIndex: 3,
             background: 'var(--bg-0)',
             borderBottom: '1px solid var(--line)',
-            padding: '10px 14px',
+            padding: '12px 16px',
             display: 'flex', alignItems: 'center', gap: 10,
           }}>
             <div style={{
               display: 'flex', alignItems: 'center', gap: 8,
-              padding: '6px 10px',
+              padding: '7px 12px',
               background: 'var(--bg-2)', border: '1px solid var(--line)',
-              borderRadius: 6, flex: 1, maxWidth: 320,
+              borderRadius: 7, flex: 1, maxWidth: 340,
             }}>
               <Icon name="search" size={13} />
               <input
@@ -117,7 +117,7 @@ export function ApplicationsPage() {
                 placeholder="Search company or role…"
                 style={{
                   flex: 1, background: 'transparent', border: 'none',
-                  outline: 'none', color: 'var(--fg-0)', fontSize: 13,
+                  outline: 'none', color: 'var(--fg-0)', fontSize: 14,
                 }}
               />
               {q && (
@@ -129,16 +129,16 @@ export function ApplicationsPage() {
                 </button>
               )}
             </div>
-            <span style={{ fontFamily: 'var(--mono)', fontSize: 11, color: 'var(--fg-3)', marginLeft: 'auto' }}>
+            <span style={{ fontFamily: 'var(--mono)', fontSize: 11.5, color: 'var(--fg-3)', marginLeft: 'auto' }}>
               {rows.length}{applications.length > 0 ? ` of ${applications.length}` : ''}
             </span>
             <select
               value={sort}
               onChange={(e) => setSort(e.target.value as 'recent' | 'score')}
               style={{
-                padding: '6px 10px', borderRadius: 6,
+                padding: '7px 10px', borderRadius: 7,
                 background: 'var(--bg-2)', border: '1px solid var(--line)',
-                color: 'var(--fg-0)', fontSize: 12, fontFamily: 'var(--sans)',
+                color: 'var(--fg-0)', fontSize: 13, fontFamily: 'var(--sans)',
                 outline: 'none',
               }}
             >
@@ -160,11 +160,11 @@ export function ApplicationsPage() {
               {/* Column headers */}
               <div style={{
                 display: 'grid',
-                gridTemplateColumns: 'minmax(160px, 1fr) 110px 80px 104px 40px',
+                gridTemplateColumns: 'minmax(160px, 1fr) 110px 80px 112px 44px',
                 gap: 8,
-                padding: '10px 14px',
+                padding: '11px 16px',
                 borderBottom: '1px solid var(--line)',
-                fontFamily: 'var(--mono)', fontSize: 10.5,
+                fontFamily: 'var(--mono)', fontSize: 11,
                 color: 'var(--fg-3)', textTransform: 'uppercase', letterSpacing: '0.08em',
               }}>
                 <span>Role · Company</span>
@@ -194,9 +194,9 @@ function AppRow({ app }: { app: Application }) {
       onClick={() => navigate(`/applications/${app.id}`)}
       style={{
         display: 'grid',
-        gridTemplateColumns: 'minmax(160px, 1fr) 110px 80px 104px 40px',
+        gridTemplateColumns: 'minmax(160px, 1fr) 110px 80px 112px 44px',
         gap: 8,
-        padding: '12px 14px',
+        padding: '14px 16px',
         alignItems: 'center',
         borderBottom: '1px solid var(--line)',
         cursor: 'pointer',
@@ -206,19 +206,19 @@ function AppRow({ app }: { app: Application }) {
       onMouseEnter={() => setHovered(true)}
       onMouseLeave={() => setHovered(false)}
     >
-      <div style={{ display: 'flex', gap: 12, alignItems: 'center', minWidth: 0 }}>
+      <div style={{ display: 'flex', gap: 13, alignItems: 'center', minWidth: 0 }}>
         <div style={{
-          width: 28, height: 28, borderRadius: 6, flexShrink: 0,
+          width: 32, height: 32, borderRadius: 7, flexShrink: 0,
           background: 'var(--bg-2)', border: '1px solid var(--line)',
           display: 'grid', placeItems: 'center',
-          fontSize: 11, fontWeight: 600, color: 'var(--fg-1)',
+          fontSize: 11.5, fontWeight: 600, color: 'var(--fg-1)',
           fontFamily: 'var(--mono)',
         }}>
           {coInitials(app.companyName)}
         </div>
         <div style={{ minWidth: 0, flex: 1 }}>
           <div style={{
-            fontSize: 13.5, fontWeight: 500, color: 'var(--fg-0)',
+            fontSize: 14, fontWeight: 500, color: 'var(--fg-0)',
             whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis',
           }}>
             {app.jobTitle ?? 'Unknown position'}
@@ -227,13 +227,13 @@ function AppRow({ app }: { app: Application }) {
             display: 'flex', alignItems: 'center', gap: 6,
             marginTop: 3, whiteSpace: 'nowrap', overflow: 'hidden',
           }}>
-            <span style={{ fontFamily: 'var(--mono)', fontSize: 11, color: 'var(--fg-2)' }}>
+            <span style={{ fontFamily: 'var(--mono)', fontSize: 11.5, color: 'var(--fg-2)' }}>
               {app.companyName ?? 'Unknown company'}
             </span>
             {app.parsedData?.stack?.slice(0, 3).map((tech) => (
               <span key={tech} style={{
-                fontFamily: 'var(--mono)', fontSize: 10,
-                padding: '1px 5px', borderRadius: 3,
+                fontFamily: 'var(--mono)', fontSize: 10.5,
+                padding: '2px 5px', borderRadius: 3,
                 background: 'var(--bg-2)', border: '1px solid var(--line)',
                 color: 'var(--fg-2)',
               }}>
@@ -244,11 +244,11 @@ function AppRow({ app }: { app: Application }) {
         </div>
       </div>
 
-      <span style={{ fontFamily: 'var(--mono)', fontSize: 10.5, color: 'var(--fg-2)', overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>
+      <span style={{ fontFamily: 'var(--mono)', fontSize: 11.5, color: 'var(--fg-2)', overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>
         {app.parsedData?.location ?? <span style={{ color: 'var(--fg-3)' }}>—</span>}
       </span>
 
-      <span style={{ fontFamily: 'var(--mono)', fontSize: 11, color: 'var(--fg-1)' }}>
+      <span style={{ fontFamily: 'var(--mono)', fontSize: 11.5, color: 'var(--fg-1)' }}>
         {app.matchScore != null ? (
           <ScoreBadge value={app.matchScore} />
         ) : (
@@ -259,7 +259,7 @@ function AppRow({ app }: { app: Application }) {
       <StatusBadge status={app.status} />
 
       <span style={{
-        fontFamily: 'var(--mono)', fontSize: 11,
+        fontFamily: 'var(--mono)', fontSize: 11.5,
         color: 'var(--fg-3)', textAlign: 'right',
       }}>
         {timeAgo(app.createdAt)}
